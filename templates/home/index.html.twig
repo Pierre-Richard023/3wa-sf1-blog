@@ -3,5 +3,11 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-    <p>Salut {{ name }} !!!</p>
+    <div class="card bg-light mb-3">
+  <div class="card-header">{{ post.author }}</div>
+  <div class="card-body">
+    <h4 class="card-title">{{ post.title }}</h4>
+    <p class="card-text">{{ post.description }}</p>
+  </div>
+</div>
 {% endblock %}
