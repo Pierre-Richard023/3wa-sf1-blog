@@ -18,7 +18,7 @@ class PostFixtures extends Fixture
             $post->setTitle($faker->words(rand(3,10), true))
                 ->setDescription($faker->paragraphs(rand(2, 10), true))
                 ->setAuthor($faker->firstname())
-                ->setImage('http://placeimg.com/300/300/any');
+                ->setImage('http://placeimg.com/30'.$i.'/300/any');
 
             $manager->persist($post);
         }
