@@ -19,6 +19,11 @@ class PostFixtures extends Fixture
                 ->setDescription($faker->paragraphs(rand(2, 10), true))
                 ->setAuthor($faker->firstname())
                 ->setImage('http://placeimg.com/30'.$i.'/300/any');
+            
+            for($j = 0; $j < rand(1, 3); $j++) {
+                $post->addCategory($this->getReference('category' . rand(0, 4)));
+            }
+                
 
             $manager->persist($post);
         }

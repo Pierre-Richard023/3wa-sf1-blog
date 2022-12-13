@@ -13,11 +13,13 @@ class CategoryFixtures extends Fixture
     {
         $faker = Faker\Factory::create('fr_FR');
 
-        for($i=0; $i<5; $i++) {
+        for($i = 0; $i < 5; $i++) {
             $category = new Category;
             $category->setName($faker->word(1));
-
+            
             $manager->persist($category);
+
+            $this->addReference('category' . $i, $category);
         }
 
         $manager->flush();
