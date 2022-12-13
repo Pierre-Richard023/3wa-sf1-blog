@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Post;
 use App\Repository\CategoryRepository;
 use App\Repository\PostRepository;
@@ -21,33 +22,12 @@ class PostController extends AbstractController
     }
 
     #[Route('/Post/category/{id<[0-9]+>}', name:'index_by_category')]
-    public function indexByCategory($id, CategoryRepository $categoryRepository, PostRepository $postRepository)
+    public function indexByCategory(Category $category, CategoryRepository $categoryRepository)
     {
-        $category = $categoryRepository->find($id);
-        $postsByCategory = $category->getPosts();
-
-        return $this->render('home/index.html.twig', [
-            'posts' => $postsByCategory,
+          return $this->render('home/index.html.twig', [
+            'posts' => $category->getPosts(),
             'categories' => $categoryRepository->findall()
         ]); 
-
-
-        // $category  = $categoryRepository->find($id);
-
-        // $posts = $postRepository->findAll();
-
-        // $postsByCategory = [];
-
-        // foreach($posts as $post) {
-        //     if($post->getCategories()->contains($category)) {
-        //         $postsByCategory[] = $post;
-        //     }
-        // }
-
-        // return $this->render('home/index.html.twig', [
-        //     'posts' => $postsByCategory,
-        //     'categories' => $categoryRepository->findall()
-        // ]);
     }
 
     #[Route('/post/{id<[0-9]+>}')]
