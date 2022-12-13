@@ -20,6 +20,36 @@ class PostController extends AbstractController
         ]);
     }
 
+    #[Route('/Post/category/{id<[0-9]+>}', name:'index_by_category')]
+    public function indexByCategory($id, CategoryRepository $categoryRepository, PostRepository $postRepository)
+    {
+        $category = $categoryRepository->find($id);
+        $postsByCategory = $category->getPosts();
+
+        return $this->render('home/index.html.twig', [
+            'posts' => $postsByCategory,
+            'categories' => $categoryRepository->findall()
+        ]); 
+
+
+        // $category  = $categoryRepository->find($id);
+
+        // $posts = $postRepository->findAll();
+
+        // $postsByCategory = [];
+
+        // foreach($posts as $post) {
+        //     if($post->getCategories()->contains($category)) {
+        //         $postsByCategory[] = $post;
+        //     }
+        // }
+
+        // return $this->render('home/index.html.twig', [
+        //     'posts' => $postsByCategory,
+        //     'categories' => $categoryRepository->findall()
+        // ]);
+    }
+
     #[Route('/post/{id<[0-9]+>}')]
     public function show(Post $post): Response
     {
