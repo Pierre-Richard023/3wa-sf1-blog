@@ -19,6 +19,10 @@
           </div>
         </li>
       </ul>
+      <form action="{{ path('index_by_search') }}" method="POST" class="d-flex">
+        <input class="form-control me-sm-2" type="search" name="search" placeholder="Recherche">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Recherche</button>
+      </form>
     </div>
   </div>
 </nav>
