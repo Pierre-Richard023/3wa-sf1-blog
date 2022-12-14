@@ -13,15 +13,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PostController extends AbstractController
 {
-    public function __construct(private CategoryRepository $categoryRepository)
-    {
-    }
+    public function __construct(
+        private CategoryRepository $categoryRepository, 
+        private PostRepository $postRepository
+        ){}
 
     #[Route('/', name: 'home')]
-    public function index(PostRepository $postRepository): Response
+    public function index(): Response
     {
         return $this->render('home/index.html.twig', [
-            'posts' =>  $postRepository->findAll(),
+            'posts' =>  $this->postRepository->findAll(),
             'categories' => $this->categoryRepository->findall()
         ]);
     }
@@ -35,15 +36,13 @@ class PostController extends AbstractController
         ]); 
     }
 
-    #[Route('/Post/search}', name:'index_by_search')]
-    public function indexBySearch(Request $request, PostRepository $postRepository)
+    #[Route('/Post/search', name:'index_by_search')]
+    public function indexBySearch(Request $request)
     {
         $search = $request->request->get('search');
 
-        $posts = $postRepository->findAllBysearch($search);
-                
         return $this->render('home/index.html.twig', [
-            'posts' => $posts,
+            'posts' => $this->postRepository->findAllBysearch($search),
             'categories' => $this->categoryRepository->findall()
         ]); 
     }
