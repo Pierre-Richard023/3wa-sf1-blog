@@ -7,6 +7,7 @@ use App\Entity\Post;
 use App\Repository\CategoryRepository;
 use App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -30,6 +31,19 @@ class PostController extends AbstractController
     {
           return $this->render('home/index.html.twig', [
             'posts' => $category->getPosts(),
+            'categories' => $this->categoryRepository->findall()
+        ]); 
+    }
+
+    #[Route('/Post/search}', name:'index_by_search')]
+    public function indexBySearch(Request $request, PostRepository $postRepository)
+    {
+        $search = $request->request->get('search');
+
+        $posts = $postRepository->findAllBysearch($search);
+                
+        return $this->render('home/index.html.twig', [
+            'posts' => $posts,
             'categories' => $this->categoryRepository->findall()
         ]); 
     }
