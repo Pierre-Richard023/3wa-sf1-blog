@@ -30,11 +30,6 @@ class Comment
     private ?User $user = null;
 
 
-    public function __construct()
-    {
-        $this->setCreateAt(new DateTimeImmutable());
-    }
-
     public function getId(): ?int
     {
         return $this->id;

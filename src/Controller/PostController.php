@@ -3,9 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Comment;
 use App\Entity\Post;
+use App\Form\CommentType;
 use App\Repository\CategoryRepository;
+use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
+use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,11 +51,31 @@ class PostController extends AbstractController
         ]); 
     }
 
-    #[Route('/post/{id<[0-9]+>}')]
-    public function show(Post $post): Response
+    #[Route('/post/{id<[0-9]+>}', name:'show')]
+    public function show(Post $post,Request $request,CommentRepository $commentRepository): Response
     {
+
+        $comment = new Comment;
+        $form= $this->createForm(CommentType::class,$comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+    
+            $comment->setCreateAt(new DateTimeImmutable())
+                    ->setPost($post) 
+                    ->setUser($this->getUser())
+            ;
+
+            $commentRepository->save($comment, true);
+            $this->addFlash('success','Votre commentaires à été ajouter avec success');
+            return $this->redirectToRoute('show',['id'=>$post->getId()]);
+        }
+
+
+
         return $this->render('home/show.html.twig', [
-            'post' => $post
+            'post' => $post,
+            'commentForm' => $form
         ]);
     }
 }

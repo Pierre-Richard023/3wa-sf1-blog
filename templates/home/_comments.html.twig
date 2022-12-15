@@ -1,0 +1,19 @@
+<div class="container">
+	<h4>Commentaires :</h4>
+	{% for comment in post.comments %}
+
+		<figure>
+			<blockquote class="blockquote">
+				<p class="mb-0">{{ comment.content }}</p>
+
+			</blockquote>
+			<figcaption class="blockquote-footer">
+				{{ comment.user.username }}
+				<cite title="Source Title">
+					{{ comment.createAt | date(' d M Y  à  H:i:s') }}
+				</cite>
+			</figcaption>
+		</figure>
+
+	{% endfor %}
+</div>

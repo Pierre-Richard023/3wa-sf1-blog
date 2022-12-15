@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Comment;
+use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -20,6 +21,7 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
             $comment=new Comment;
             
             $comment    ->setContent($faker->words(rand(25,60), true))
+                        ->setCreateAt(new DateTimeImmutable())
                         ->setUser($this->getReference('user' . rand(0, 4)))
                         ->setPost($this->getReference('post' . rand(0, 9)))
             ;
