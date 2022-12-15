@@ -61,8 +61,15 @@ class PostController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
     
+            if(!$this->getUser())
+            {
+                $this->addFlash('danger','Vous devez être connecté pour ajouter un commentaire');
+                return $this->redirectToRoute('show',['id'=>$post->getId()]);
+
+            }
+
             $comment->setCreateAt(new DateTimeImmutable())
-                    ->setPost($post) 
+                    ->setPost($post)
                     ->setUser($this->getUser())
             ;
 

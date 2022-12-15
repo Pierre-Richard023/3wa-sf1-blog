@@ -8,6 +8,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CommentType extends AbstractType
 {
@@ -18,7 +20,17 @@ class CommentType extends AbstractType
                 'attr'=>[
                     'placeholder'=>'Message',
                     'rows'=>'4'
-                ]
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer un commentaire',
+                    ]),
+                    new Length([
+                        'min' => 6,
+                        'minMessage' => 'Votre commentaire doit contenir au moins {{ limit }} caractères',
+                        'max' => 4096,
+                    ]),
+                ],
             ])
             ->add('commenter',SubmitType::class,[
 

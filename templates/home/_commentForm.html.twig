@@ -1,4 +1,5 @@
 {{ form_start(commentForm) }}
+    {{ form_errors(commentForm) }}
     {{ form_widget(commentForm.content) }}
     {{ form_row(commentForm.commenter) }}
 {{ form_end(commentForm) }}
