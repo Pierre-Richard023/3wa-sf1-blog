@@ -26,7 +26,8 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
                 $post->addCategory($this->getReference('category' . rand(0, 4)));
             }
                 
-
+            $this->addReference('post' . $i, $post);
+            
             $manager->persist($post);
         }
 
